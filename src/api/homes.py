@@ -4,23 +4,9 @@ from src.database import async_session_maker
 from src.repositories.homes import HomesRepository
 from src.schemas.homes import HomePatchRequest, HomeAddRequest, HomeAdd
 from src.services.key_generation import generate_key
+
 router = APIRouter(prefix="/homes", tags=["Дома"])
 
-# @router.get("", summary="Получение всех отелей")
-# async def get_all_homes(
-#     pagination: PaginationDep,
-#     title:      str | None = Query(None, description="Название дома"),
-#     active:   bool | None = Query(None, description="Активность дома"),
-#     ):
-    
-#     per_page = pagination.per_page or 5
-    
-#     async with async_session_maker() as session:
-        
-#         return await HomesRepository(session).get_filtered(active = active,
-#                                                        title = title,
-#                                                        limit = per_page, 
-#                                                        offset = (pagination.page-1)*per_page)
 
 @router.get("/", summary="Получение информации о всех домах")
 async def get_all_homes():

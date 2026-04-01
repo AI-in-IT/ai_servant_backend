@@ -12,8 +12,8 @@ class UsersOrm(Base):
     tg_id: Mapped[int] = mapped_column(nullable=False, unique=True)
     name: Mapped[str] = mapped_column(String(200))
     active: Mapped[bool] = mapped_column(Boolean)
-    home: Mapped[int | None] = mapped_column(
-        ForeignKey("homes.id", ondelete="SET NULL"),
+    family: Mapped[int | None] = mapped_column(
+        ForeignKey("families.id", ondelete="SET NULL"),
         nullable=True)
     
     

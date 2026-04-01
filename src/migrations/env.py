@@ -11,6 +11,7 @@ from src.database import Base
 from src.models.users import UsersOrm
 from src.models.homes import HomesOrm
 from src.models.foods import FoodsOrm
+from src.models.families import FamiliesOrm
 
 #импортируем настройки с переменными среды
 from src.config import settings
