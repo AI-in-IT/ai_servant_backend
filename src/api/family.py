@@ -28,7 +28,7 @@ async def delete_family(db: DBDep, family_id : int ):
     await db.commit()
     return {"status" : "OK"}
 
-@router.post("", summary="Добавление семьи")
+@router.post("/", summary="Добавление семьи")
 async def creat_family(db: DBDep,family_data : FamilyAddRequest = Body(openapi_examples={
     "1": {
         "summary": "Ивановы", "value":{
