@@ -16,4 +16,3 @@ class UsersOrm(Base):
         ForeignKey("families.id", ondelete="SET NULL"),
         nullable=True, index=True)
     
-    
