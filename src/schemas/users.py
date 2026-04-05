@@ -5,14 +5,15 @@ class UserAddRequest(BaseModel):
     name: str
     active: bool
 
+
 class User(UserAddRequest):
     id: int
-    family: int | None = Field(None)
+    family_id: int | None = Field(None)
 
 
 class UserPatchRequest(BaseModel):
     name: str | None = Field(None)
     active: bool | None = Field(None)
-    family: int | None = Field(None)
+    family_id: int | None = Field(None)
 
 

@@ -22,7 +22,7 @@ class FamilyService:
         """Возвращает семью или кидает FamilyNotFoundError"""
         family = await self.family_repo.get_one_or_none(id=family_id)
         if not family:
-            raise FamilyNotFoundError(f"Семья с ID {family_id} не найдена")
+            raise FamilyNotFoundError(f"Семья с таким ID не найдена")
         return family
 
     async def _get_member_count(self,family: Family) -> int:
@@ -32,25 +32,25 @@ class FamilyService:
     async def _check_family_is_not_full(self,family: Family) -> None:
         member_count = await self._get_member_count(family)
         if member_count >= family.max_members: 
-            raise FamilyFullError(f"Семья с ID {family.id} полностью заполнена")
+            raise FamilyFullError(f"Семья с таким ID полностью заполнена")
 
     async def _get_existing_user(self,user_id: int) -> User:
         """Возвращает юзера или кидает UserNotFoundError"""
         user = await self.user_repo.get_one_or_none(id=user_id)
         if not user:
-            raise UserNotFoundError(f"Пользователь с ID {user_id} не найден")
+            raise UserNotFoundError(f"Пользователь с таким ID не найден")
         return user
 
     async def _check_users_in_family(self,user: User, family_id: int) -> None:
         """Выкидывает NotInFamilyError если юзер не в семье"""
         if user.family_id != family_id:
-            raise NotInFamilyError(f"Пользователь с ID {user.id} не состоит в семье с ID {family_id}")
+            raise NotInFamilyError(f"Пользователь с таким ID не состоит в этой семье")
 
     
     async def _check_users_not_in_family(self,user: User) -> None:
         """Выкидывает AlreadyInFamilyError если юзер уже состоит в семье"""
         if user.family_id:
-            raise AlreadyInFamilyError(f"Пользователь с ID {user.id} уже состоит в семье")
+            raise AlreadyInFamilyError(f"Пользователь с таким ID уже состоит в семье")
 
 
     async def create(self, data: FamilyAdd) -> Family:
@@ -68,7 +68,7 @@ class FamilyService:
         family = await self._get_existing_family(family_id)
         
         if family.key != family_key:
-            raise InvalidInviteCodeError(f"Неверный код для подключения к семье с ID {family.id}")
+            raise InvalidInviteCodeError(f"Неверный код для подключения к семье")
         else:
             user = await self._get_existing_user(user_id)
             await self._check_family_is_not_full(family)
@@ -80,5 +80,12 @@ class FamilyService:
         user = await self._get_existing_user(user_id)
         await self._check_users_in_family(family_id=family.id, user=user)
         await self.user_repo.set_family_id(user_id=user.id, family_id=None)
+
+    async def get_family_by_key(self, family_key: str) -> Family:
+        family = await self.family_repo.get_one_or_none(key=family_key)
+        if family is None:
+            raise InvalidInviteCodeError(f"Некорректный код подключения")
+        return family
+
 
     

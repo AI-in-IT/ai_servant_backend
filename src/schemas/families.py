@@ -6,12 +6,15 @@ class FamilyAddRequest(BaseModel):
 
 class FamilyAdd(FamilyAddRequest):
     key: str
-    max_members: int | 2 = Field(int)
-
+    max_members: int = 2
 class Family(FamilyAddRequest):
     id: int
     key: str
-    max_members: int | 2 = Field(int)
+    max_members: int = 2
+
+class FamilyJoinRequest(BaseModel):
+    key: str
+
 
 
 class FamilyPatchRequest(BaseModel):

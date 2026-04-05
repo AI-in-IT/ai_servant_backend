@@ -5,6 +5,8 @@ import uvicorn
 from fastapi import FastAPI, Request
 
 from fastapi.responses import JSONResponse
+sys.path.append(str(Path(__file__).parent.parent))
+
 from src.utils.exception import (
     DomainError,
     FamilyNotFoundError,
@@ -12,11 +14,12 @@ from src.utils.exception import (
     AlreadyInFamilyError,
     UserNotFoundError,
     NotInFamilyError,
-    InvalidInviteCodeError
+    InvalidInviteCodeError,
+    UserAlreadyRegistrationError
 )
 
 
-sys.path.append(str(Path(__file__).parent.parent))
+
 
 from src.api.docs import create_docs_router
 from src.api.family import router as router_families
@@ -39,6 +42,7 @@ DOMAIN_ERROR_STATUS_MAP = {
     UserNotFoundError: 404,
     NotInFamilyError: 400,
     InvalidInviteCodeError: 400,
+    UserAlreadyRegistrationError: 409
 }
 
 @app.exception_handler(DomainError)

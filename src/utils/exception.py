@@ -20,3 +20,6 @@ class AlreadyInFamilyError(DomainError):
 
 class NotInFamilyError(DomainError):
     pass
+
+class UserAlreadyRegistrationError(DomainError):
+    pass
