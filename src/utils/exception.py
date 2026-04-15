@@ -23,3 +23,7 @@ class NotInFamilyError(DomainError):
 
 class UserAlreadyRegistrationError(DomainError):
     pass
+
+# --- Задачи ---
+class TaskNotFoundError(DomainError):
+    pass
